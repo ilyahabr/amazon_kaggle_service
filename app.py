@@ -2,9 +2,9 @@ import uvicorn
 from fastapi import FastAPI
 from omegaconf import OmegaConf
 
-from src.containers.containers import AppContainer
-from src.routes.routers import router as app_router
-from src.routes import amazon as amazon_routes
+from dev_amazon.src.containers.containers import AppContainer
+from dev_amazon.src.routes.routers import router as app_router
+from dev_amazon.src.routes import amazon as amazon_routes
 
 
 def create_app() -> FastAPI:
