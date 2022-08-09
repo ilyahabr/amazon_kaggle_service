@@ -42,3 +42,8 @@ generate_coverage_report:
 .PHONY: build
 build:
 	docker build -f Dockerfile . -t $(DOCKER_IMAGE):$(DOCKER_TAG)
+
+
+.PHONY: install_c_libs
+install_c_libs:
+	apt-get update && apt-get install -y --no-install-recommends gcc ffmpeg libsm6 libxext6
