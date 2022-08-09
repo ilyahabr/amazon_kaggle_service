@@ -2,3 +2,5 @@ data
 inference.py
 resave_model.py
 scr/__init__.py
+weights
+!*.dvc
