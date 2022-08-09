@@ -3,7 +3,7 @@ import typing as tp
 import numpy as np
 import torch
 
-from dev_amazon.src.services.preprocess_utils import preprocess_image
+from src.services.preprocess_utils import preprocess_image
 
 
 class AmazonClassifier:

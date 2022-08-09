@@ -1,6 +1,6 @@
 from dependency_injector import containers, providers
 
-from dev_amazon.src.services.amazon_classifier import AmazonClassifier
+from src.services.amazon_classifier import AmazonClassifier
 
 
 class AppContainer(containers.DeclarativeContainer):

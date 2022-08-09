@@ -3,9 +3,9 @@ import numpy as np
 from dependency_injector.wiring import Provide, inject
 from fastapi import Depends, File
 
-from dev_amazon.src.containers.containers import AppContainer
-from dev_amazon.src.routes.routers import router
-from dev_amazon.src.services.amazon_classifier import AmazonClassifier
+from src.containers.containers import AppContainer
+from src.routes.routers import router
+from src.services.amazon_classifier import AmazonClassifier
 
 
 @router.get('/amazon_classes')
