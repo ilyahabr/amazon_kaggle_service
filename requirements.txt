@@ -12,6 +12,9 @@ coverage==6.4.2
 darglint==1.8.1
 dependency-injector==4.39.1
 docutils==0.19
+dvc==2.17.0
+dvc[gdrive]
+dvc[ssh]==2.12.1
 eradicate==2.1.0
 fastapi==0.78.0
 flake8==4.0.1
@@ -69,6 +72,3 @@ typing-extensions==4.3.0
 urllib3==1.26.10
 uvicorn==0.18.2
 wemake-python-styleguide==0.16.1
-dvc==2.17.0
-dvc[gdrive]
-dvc[ssh]==2.12.1
