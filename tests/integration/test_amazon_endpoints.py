@@ -36,4 +36,3 @@ def test_predict_proba(client: TestClient, sample_image_bytes: bytes):
 
     for amazon_prob in amazon2prob.values():
         assert amazon_prob <= 1
-

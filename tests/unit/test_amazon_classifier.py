@@ -2,7 +2,7 @@ from copy import deepcopy
 
 import numpy as np
 
-from src.containers.conainers import AppContainer
+from src.containers.containers import AppContainer
 
 
 def test_predicts_not_fail(app_container: AppContainer, sample_image_np: np.ndarray):
