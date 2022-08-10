@@ -18,6 +18,4 @@ RUN make install
 
 RUN make download_weights
 
-EXPOSE 6969
-
 CMD make run_app
