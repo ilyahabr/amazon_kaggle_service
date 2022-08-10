@@ -14,6 +14,7 @@ install:
 .PHONY: download_weights
 download_weights:
 	dvc pull -R weights
+	ls weights
 
 .PHONY: lint
 lint:
@@ -35,8 +36,6 @@ run_all_tests:
 .PHONY: generate_coverage_report
 generate_coverage_report:
 	PYTHONPATH=. pytest --cov=src --cov-report html  tests/
-
-
 
 
 .PHONY: build
