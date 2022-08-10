@@ -1,4 +1,4 @@
-APP_PORT := 6969
+APP_PORT := 5505
 DOCKER_TAG := latest
 DOCKER_IMAGE := amazon
 
