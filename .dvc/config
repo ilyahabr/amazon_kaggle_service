@@ -1,6 +1,7 @@
 [core]
-    remote = myremote
+    remote = my_remote
 [cache]
     type = "hardlink,symlink"
-['remote "myremote"']
-    url = gdrive://1CXMxnzfpqHY1glA2DO18c4vCRzf2TNcm
+['remote "my_remote"']
+    url = ssh://91.206.15.25/home/ilyabakalets12/dvc_files
+    user = ilyabakalets12
