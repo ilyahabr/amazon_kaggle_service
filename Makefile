@@ -2,6 +2,10 @@ APP_PORT := 6969
 DOCKER_TAG := latest
 DOCKER_IMAGE := amazon
 
+DEPLOY_HOST := demo_host
+KEY_FILE := ~/.ssh/id_rsa
+DVC_REMOTE_NAME := my_remote
+USERNAME := ilyabakalets12
 
 .PHONY: run_app
 run_app:
@@ -15,6 +19,16 @@ install:
 download_weights:
 	dvc pull -R weights
 	ls weights
+
+
+.PHONY: init_dvc
+init_dvc:
+	#dvc init --no-scm
+	dvc remote add --default $(DVC_REMOTE_NAME) ssh://91.206.15.25/home/$(USERNAME)/dvc_files
+	dvc remote modify $(DVC_REMOTE_NAME) user $(USERNAME)
+	dvc config cache.type hardlink,symlink
+
+
 
 .PHONY: lint
 lint:
