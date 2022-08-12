@@ -67,12 +67,11 @@ docker run -d -p 5505:5505 id_image
 ```
 после открыть http://0.0.0.0:5505/docs
 
-Докер образ с тегом latest есть на gitlab
-как спулить не знаю)
+Докер образ с тегом latest на gitlab
 ```
-спулить образ с gitlab ci
-``` 
-
+docker login registry.gitlab.com
+docker pull registry.gitlab.com/ilyabakalets12/dev_amazon:latest
+```
 
 ### Запуск тестов:
 Запуск юнит тестов
