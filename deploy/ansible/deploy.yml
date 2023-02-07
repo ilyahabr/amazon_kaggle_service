@@ -1,0 +1,42 @@
+- hosts: demo_host
+  tasks:
+    - name: create workdir
+      file:
+        path: '{{ playbook_dest }}'
+        state: directory
+        owner: '{{ ansible_user }}'
+      tags: [ 'prepare' ]
+
+    - name: create pull script
+      template:
+        dest: '{{ playbook_dest }}/pull.sh'
+        src: 'templates/pull.sh'
+        mode: 0755
+      tags: [ 'prepare' ]
+
+    - name: create run script
+      template:
+        dest: '{{ playbook_dest }}/run.sh'
+        src: 'templates/run.sh'
+        mode: 0755
+      tags: ['prepare']
+
+    - name: pull docker image
+      command: '{{ playbook_dest }}/pull.sh'
+      tags: [ 'pull' ]
+
+    - name: stop and remove existing container
+      command: "{{ playbook_dest }}/destroy.sh"
+      ignore_errors: true
+      tags: [ 'deploy' ]
+
+    - name: run docker
+      command: "{{ playbook_dest }}/run.sh"
+      tags: [ 'deploy' ]
+
+    - name: clean docker images and containers
+      command: "{{ playbook_dest }}/clean.sh"
+      ignore_errors: true
+      tags: [ 'deploy' ]
+
+

@@ -1,0 +1,81 @@
+image: python:3.8
+
+variables:
+  DOCKER_IMAGE: $CI_REGISTRY_IMAGE
+  DOCKER_TAG: $CI_COMMIT_SHORT_SHA
+
+before_script:
+    - mkdir ~/.ssh
+    - echo "$HOST_SSH_KEY_BASE64" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+after_script:
+    - rm -f ~/.ssh/id_rsa
+
+
+stages:
+  - lint
+  - tests
+  - build
+  - deploy
+
+lint:
+    stage: lint
+    script:
+      - python3 -m pip install wemake-python-styleguide==0.16.1
+      - make lint
+
+unit_tests:
+    stage: tests
+    script:
+      - ls
+      - make install_c_libs && make install && make download_weights
+      - make run_unit_tests
+
+integration_tests:
+    stage: tests
+    script:
+      - ls
+      - make install_c_libs && make install && make download_weights
+      - make run_integration_tests
+
+build_image:
+  stage: build
+  image: docker
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+  services:
+    - docker:20.10.5-dind
+  script:
+    - apk add make python3-dev py-pip gcc musl-dev py3-pygit2 py3-psutil
+    - python3 -m pip install dvc[ssh]==2.12.1
+    - python3 -m pip install dvc[gdrive]
+    - make download_weights
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $DOCKER_IMAGE:latest --tag ${DOCKER_IMAGE}:${DOCKER_TAG} --tag ${DOCKER_IMAGE}:latest .
+    - docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
+    - docker push ${DOCKER_IMAGE}:latest
+
+  when: manual
+
+deploy:
+  stage: deploy
+  variables:
+    ANSIBLE_HOST_KEY_CHECKING: "false"
+  script:
+    - python3 -m pip install ansible==6.0.0
+    - make deploy DOCKER_IMAGE=${DOCKER_IMAGE} DOCKER_TAG=${DOCKER_TAG}
+
+  when: manual
+
+
+destroy:
+  stage: deploy
+  variables:
+    ANSIBLE_HOST_KEY_CHECKING: "false"
+  script:
+    - python3 -m pip install ansible==6.0.0
+    - make destroy
+
+  when: manual

@@ -1,0 +1,4 @@
+services:
+  amazon_classifier:
+    model_path: 'weights/script_model_wrapper.pt'
+    device: 'cpu'
